@@ -1,0 +1,6 @@
+@BrainHub.Api_HostAddress = http://localhost:5042
+
+GET {{BrainHub.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

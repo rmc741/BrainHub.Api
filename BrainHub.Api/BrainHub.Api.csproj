@@ -17,7 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Application\" />
+		<Folder Include="Application\Service\" />
 	</ItemGroup>
 
 </Project>

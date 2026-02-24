@@ -1,4 +1,5 @@
-﻿using BrainHub.Api.Data.Interface;
+﻿using BrainHub.Api.Application.Dtos;
+using BrainHub.Api.Data.Interface;
 using BrainHub.Api.Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,11 @@ namespace BrainHub.Api.Data.Repository
                 .AsNoTracking()
                 .OrderByDescending(a => a.DataCriacao)
                 .ToListAsync();
+        }
+
+        public Task<Artigo> CreateArtigo(CreateArtigoDto artigoDto)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using BrainHub.Api.Data.Interface;
+﻿using BrainHub.Api.Application.Dtos;
+using BrainHub.Api.Data.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,12 @@ namespace BrainHub.Api.Controllers
         {
             var result = await _artigoRepository.GetArtigosList();
             return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateArtigo([FromBody] CreateArtigoDto artigoDto) {
+            var result = await _artigoRepository.CreateArtigo(artigoDto);
+            return Ok();
         }
     }
 }

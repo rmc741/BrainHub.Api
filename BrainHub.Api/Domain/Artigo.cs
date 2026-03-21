@@ -1,14 +1,16 @@
-﻿namespace BrainHub.Api.Domain
+namespace BrainHub.Api.Domain
 {
     public class Artigo
     {
         public int Id { get; set; }
 
-        public string Titulo { get; set; }
+        public string Titulo { get; set; } = string.Empty;
 
-        public string Conteudo { get; set; }
+        public string? Resumo { get; set; }
 
-        public string Autor { get; set; }
+        public string Conteudo { get; set; } = string.Empty;
+
+        public string Autor { get; set; } = string.Empty;
 
         public DateTime DataCriacao { get; set; } = DateTime.Now;
     }

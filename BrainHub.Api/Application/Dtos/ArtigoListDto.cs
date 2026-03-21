@@ -1,13 +1,13 @@
 namespace BrainHub.Api.Application.Dtos
 {
-    public class CreateArtigoDto
+    public class ArtigoListDto
     {
+        public int Id { get; set; }
+
         public string Titulo { get; set; } = string.Empty;
 
         public string? Resumo { get; set; }
 
-        public string Conteudo { get; set; } = string.Empty;
-
-        public string Autor { get; set; } = string.Empty;
+        public DateTime DataPublicacao { get; set; }
     }
 }

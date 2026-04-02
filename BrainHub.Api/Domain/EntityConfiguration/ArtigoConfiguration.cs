@@ -13,6 +13,9 @@ namespace BrainHub.Api.Domain.EntityConfiguration
                    .IsRequired()
                    .HasMaxLength(200);
 
+            builder.Property(a => a.Resumo)
+                   .HasMaxLength(500);
+
             builder.Property(a => a.Conteudo)
                 .IsRequired();
 

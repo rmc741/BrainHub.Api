@@ -1,11 +1,11 @@
-﻿using BrainHub.Api.Application.Dtos;
-using BrainHub.Api.Domain;
+using BrainHub.Api.Application.Dtos;
 
 namespace BrainHub.Api.Data.Interface
 {
     public interface IArtigoRepository
     {
-        Task<Artigo> CreateArtigo(CreateArtigoDto artigoDto);
-        Task<List<Artigo>> GetArtigosList();
+        Task<ArtigoDetailsDto> CreateArtigo(CreateArtigoDto artigoDto);
+        Task<ArtigoDetailsDto?> GetArtigoById(int id);
+        Task<List<ArtigoListDto>> GetArtigosList();
     }
 }

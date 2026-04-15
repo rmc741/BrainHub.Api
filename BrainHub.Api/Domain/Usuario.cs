@@ -13,5 +13,7 @@ namespace BrainHub.Api.Domain
         public bool Ativo { get; set; } = true;
 
         public DateTime DataCriacao { get; set; } = DateTime.Now;
+
+        public ICollection<Artigo> Artigos { get; set; } = new List<Artigo>();
     }
 }

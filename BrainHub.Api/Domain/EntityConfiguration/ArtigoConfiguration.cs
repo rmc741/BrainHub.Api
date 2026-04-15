@@ -19,11 +19,12 @@ namespace BrainHub.Api.Domain.EntityConfiguration
             builder.Property(a => a.Conteudo)
                 .IsRequired();
 
-            builder.Property(a => a.Autor)
-                   .IsRequired()
-                   .HasMaxLength(100);
-
             builder.Property(a => a.DataCriacao);
+
+            builder.HasOne(a => a.Autor)
+                .WithMany(u => u.Artigos)
+                .HasForeignKey(a => a.AutorId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

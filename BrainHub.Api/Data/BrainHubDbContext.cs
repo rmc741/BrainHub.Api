@@ -9,6 +9,8 @@ namespace BrainHub.Api.Data
 
         public DbSet<Artigo> Artigos { get; set; }
 
+        public DbSet<Usuario> Usuarios { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

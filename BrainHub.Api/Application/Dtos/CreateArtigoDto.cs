@@ -8,6 +8,6 @@ namespace BrainHub.Api.Application.Dtos
 
         public string Conteudo { get; set; } = string.Empty;
 
-        public string Autor { get; set; } = string.Empty;
+        public int AutorId { get; set; }
     }
 }

@@ -48,9 +48,9 @@ namespace BrainHub.Api.Controllers
                 ModelState.AddModelError(nameof(artigoDto.Conteudo), "Conteudo e obrigatorio.");
             }
 
-            if (string.IsNullOrWhiteSpace(artigoDto.Autor))
+            if (artigoDto.AutorId <= 0)
             {
-                ModelState.AddModelError(nameof(artigoDto.Autor), "Autor e obrigatorio.");
+                ModelState.AddModelError(nameof(artigoDto.AutorId), "AutorId deve ser informado.");
             }
 
             if (!ModelState.IsValid)
@@ -58,8 +58,15 @@ namespace BrainHub.Api.Controllers
                 return ValidationProblem(ModelState);
             }
 
-            var result = await _artigoRepository.CreateArtigo(artigoDto);
-            return CreatedAtAction(nameof(GetArtigoById), new { id = result.Id }, result);
+            try
+            {
+                var result = await _artigoRepository.CreateArtigo(artigoDto);
+                return CreatedAtAction(nameof(GetArtigoById), new { id = result.Id }, result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

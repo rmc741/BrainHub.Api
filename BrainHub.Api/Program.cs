@@ -1,8 +1,11 @@
-using Microsoft.EntityFrameworkCore;
+ï»¿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using BrainHub.Api.Config;
 using BrainHub.Api.Data;
 using BrainHub.Api.Data.Interface;
 using BrainHub.Api.Data.Repository;
+using BrainHub.Api.Domain;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +15,7 @@ builder.Services.AddDbContext<BrainHubDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("BrainHubBackContext") ?? throw new InvalidOperationException("Connection string 'BrainHubBackContext' not found.")));
 
 builder.Services.AddScoped<IArtigoRepository, ArtigoRepository>();
+builder.Services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
 
 builder.Services.AddCors(options =>
 {
@@ -19,13 +23,14 @@ builder.Services.AddCors(options =>
     {
         policy
             .AllowAnyOrigin()    // permite qualquer origem
-            .AllowAnyMethod()    // permite qualquer método (GET, POST, PUT, DELETE, etc.)
-            .AllowAnyHeader();   // permite qualquer cabeçalho
+            .AllowAnyMethod()    // permite qualquer mÃ©todo (GET, POST, PUT, DELETE, etc.)
+            .AllowAnyHeader();   // permite qualquer cabeÃ§alho
     });
 });
 
 
 builder.Services.AddControllers();
+JwtConfig.ConfigureJwt(builder.Services, builder.Configuration);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -43,8 +48,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+

@@ -1,6 +1,8 @@
 using BrainHub.Api.Application.Dtos;
 using BrainHub.Api.Data.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BrainHub.Api.Controllers
 {
@@ -35,6 +37,7 @@ namespace BrainHub.Api.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateArtigo([FromBody] CreateArtigoDto artigoDto)
         {
@@ -48,19 +51,21 @@ namespace BrainHub.Api.Controllers
                 ModelState.AddModelError(nameof(artigoDto.Conteudo), "Conteudo e obrigatorio.");
             }
 
-            if (artigoDto.AutorId <= 0)
-            {
-                ModelState.AddModelError(nameof(artigoDto.AutorId), "AutorId deve ser informado.");
-            }
-
             if (!ModelState.IsValid)
             {
                 return ValidationProblem(ModelState);
             }
 
+            var autorIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!int.TryParse(autorIdClaim, out var autorId))
+            {
+                return Unauthorized(new { message = "Token de usuario invalido." });
+            }
+
             try
             {
-                var result = await _artigoRepository.CreateArtigo(artigoDto);
+                var result = await _artigoRepository.CreateArtigo(artigoDto, autorId);
                 return CreatedAtAction(nameof(GetArtigoById), new { id = result.Id }, result);
             }
             catch (InvalidOperationException ex)

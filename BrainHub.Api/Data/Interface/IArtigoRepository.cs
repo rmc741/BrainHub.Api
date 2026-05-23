@@ -4,7 +4,7 @@ namespace BrainHub.Api.Data.Interface
 {
     public interface IArtigoRepository
     {
-        Task<ArtigoDetailsDto> CreateArtigo(CreateArtigoDto artigoDto);
+        Task<ArtigoDetailsDto> CreateArtigo(CreateArtigoDto artigoDto, int autorId);
         Task<ArtigoDetailsDto?> GetArtigoById(int id);
         Task<List<ArtigoListDto>> GetArtigosList();
     }

@@ -46,15 +46,15 @@ namespace BrainHub.Api.Data.Repository
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<ArtigoDetailsDto> CreateArtigo(CreateArtigoDto artigoDto)
+        public async Task<ArtigoDetailsDto> CreateArtigo(CreateArtigoDto artigoDto, int autorId)
         {
             var usuario = await _context.Usuarios
                 .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Id == artigoDto.AutorId);
+                .FirstOrDefaultAsync(u => u.Id == autorId && u.Ativo);
 
             if (usuario is null)
             {
-                throw new InvalidOperationException("Usuario informado nao foi encontrado.");
+                throw new InvalidOperationException("Usuario autenticado nao foi encontrado ou esta inativo.");
             }
 
             var artigo = new Artigo
@@ -62,7 +62,7 @@ namespace BrainHub.Api.Data.Repository
                 Titulo = artigoDto.Titulo.Trim(),
                 Resumo = string.IsNullOrWhiteSpace(artigoDto.Resumo) ? null : artigoDto.Resumo.Trim(),
                 Conteudo = artigoDto.Conteudo.Trim(),
-                AutorId = artigoDto.AutorId
+                AutorId = autorId
             };
 
             _context.Artigos.Add(artigo);

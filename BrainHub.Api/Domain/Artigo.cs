@@ -15,5 +15,7 @@ namespace BrainHub.Api.Domain
         public Usuario Autor { get; set; } = null!;
 
         public DateTime DataCriacao { get; set; } = DateTime.Now;
+
+        public ICollection<Comentario> Comentarios { get; set; } = new List<Comentario>();
     }
 }
